@@ -10,7 +10,7 @@ class TrafficLight
         int id;
         LightState lightState;
         Road* road;
-        void setState(LightState newState); // private — only accessible by LightController
+        void setState(LightState newState); // private — only accessible by TrafficLight and LightController
 
     public:
         TrafficLight(int id, LightState lightState, Road* road);

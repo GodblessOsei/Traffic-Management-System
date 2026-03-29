@@ -10,15 +10,15 @@ class Lane
 
 private:
     int id;
-    bool isQueueLane;
+    bool QueueLane;
     std::queue<Car> cars;
     Road *road;    
 public:
-    Lane(int id, Road *road, bool isQueueLane);
+    Lane(int id, Road *road, bool QueueLane);
     void addCar(Car car);
     Car removeCar();
     bool isEmpty();
     int getId();
-    bool getQueueLane();
+    bool isQueueLane();
 };
 

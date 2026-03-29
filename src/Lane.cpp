@@ -1,9 +1,9 @@
 #include "Lane.h"
 
-Lane:: Lane(int id, Road *road, bool isQueueLane){
+Lane:: Lane(int id, Road *road, bool QueueLane){
     this->id = id;
     this->road = road;
-    this->isQueueLane = isQueueLane;
+    this->QueueLane = QueueLane;
 }
 
 int Lane::getId(){
@@ -27,6 +27,6 @@ void Lane::addCar(Car car){
     this->cars.push(car);
 }
 
-bool Lane::getQueueLane(){
-    return this->isQueueLane;
+bool Lane::isQueueLane(){
+    return this->QueueLane;
 }
