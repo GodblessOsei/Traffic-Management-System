@@ -2,19 +2,23 @@
 #pragma once
 #include <iostream>
 
+// Represents one vehicle in the simulation.
 class Car
 {
 
 private:
+    // Unique car identifier.
     int id;
+    // Car speed value (unit defined by simulation).
     int speed;
+    // Visual color label for the car.
     std::string colour;
 
 public:
-    // constructor
+    // Create a new car.
     Car(int id, int speed, std::string colour);
 
-    // getters
+    // Accessors.
     int getSpeed();
     std::string  getColor();
     int getId();

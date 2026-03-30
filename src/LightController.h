@@ -3,6 +3,7 @@
 #include "TrafficLight.h"
 #include <map>
 
+// Signal cycle states for grouped directions.
 enum class Phase
 {
     NS_GREEN,
@@ -11,12 +12,16 @@ enum class Phase
     EW_YELLOW,
 };
 
+// Manages all traffic lights at one intersection.
 class LightController
 {
     private:
+        // One traffic light per direction.
         std::map<Direction, TrafficLight*> trafficLights;
         Phase currentPhase;
+        // Elapsed time inside the current phase.
         int timer;
+        // Apply states to N/S and E/W groups.
         void setLights(LightState ns, LightState ew);
 
     public:

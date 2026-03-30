@@ -3,3 +3,6 @@ build/
 *.out
 *.exe
 .DS_Store
+UML.md
+*.png
+*.py

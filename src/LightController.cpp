@@ -1,11 +1,13 @@
 #include "LightController.h"
 
+// Start with North/South green and East/West red.
 LightController::LightController(std::map<Direction, TrafficLight*> trafficLights)
     : trafficLights(trafficLights), currentPhase(Phase::NS_GREEN), timer(0)
 {
     setLights(LightState::GREEN, LightState::RED);
 }
 
+// Set light states by directional group.
 void LightController::setLights(LightState ns, LightState ew) {
     trafficLights[Direction::NORTH]->setState(ns);
     trafficLights[Direction::SOUTH]->setState(ns);
@@ -13,6 +15,7 @@ void LightController::setLights(LightState ns, LightState ew) {
     trafficLights[Direction::WEST]->setState(ew);
 }
 
+// Check if one direction currently has green.
 bool LightController::isGreen(Direction direction) {
     auto it = trafficLights.find(direction);
     if (it != trafficLights.end()) {
@@ -21,6 +24,7 @@ bool LightController::isGreen(Direction direction) {
     return false; // Default to false if direction not found
 }
 
+// Advance phase timer and switch states when thresholds are reached.
 void LightController::updateLights(int deltaTime) {
     timer += deltaTime;
 
