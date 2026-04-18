@@ -8,6 +8,7 @@ class Car
 
 private:
     // Unique car identifier.
+    int nextid = 0;
     int id;
     // Car speed value (unit defined by simulation).
     int speed;
@@ -16,7 +17,7 @@ private:
 
 public:
     // Create a new car.
-    Car(int id, int speed, std::string colour);
+    Car(int speed, std::string colour);
 
     // Accessors.
     int getSpeed();

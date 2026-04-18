@@ -3,8 +3,8 @@
 #include<iostream>
 
 // Initialize all car properties.
-Car::Car(int id, int speed, std::string colour){
-    this->id = id;
+Car::Car(int speed, std::string colour){
+    this->id = ++nextid;
     this->speed = speed;
     this->colour = colour;
 }

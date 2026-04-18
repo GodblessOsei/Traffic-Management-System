@@ -5,6 +5,7 @@ Lane:: Lane(int id, Road *road, bool QueueLane){
     this->id = id;
     this->road = road;
     this->QueueLane = QueueLane;
+    this->cars = cars;
 }
 
 // Return lane identifier.
