@@ -8,19 +8,24 @@ class Car
 
 private:
     // Unique car identifier.
-    int nextid = 0;
+    static int nextId;
     int id;
     // Car speed value (unit defined by simulation).
-    int speed;
+    float speed;
     // Visual color label for the car.
     std::string colour;
 
+   
+
+
 public:
+    bool canMove = false; //public because external factors determine if a car can move
+
     // Create a new car.
-    Car(int speed, std::string colour);
+    Car(float speed, std::string colour);
 
     // Accessors.
-    int getSpeed();
+    float getSpeed();
     std::string  getColor();
     int getId();
 };

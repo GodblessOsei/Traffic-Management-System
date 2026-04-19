@@ -14,7 +14,7 @@ private:
     // True when this lane is an incoming queue lane.
     bool QueueLane;
     // Cars waiting or arriving on this lane.
-    std::queue<Car> cars;
+    std::vector<Car> cars;
     Road *road;    
 public:
     // Build a lane and link it to a road.
@@ -28,5 +28,8 @@ public:
     int getId();
     // Tell whether this is a queue lane.
     bool isQueueLane();
+
+    // Get the vector of cars
+    const std::vector<Car>& getCars() const;
 };
 

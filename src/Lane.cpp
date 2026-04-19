@@ -5,7 +5,6 @@ Lane:: Lane(int id, Road *road, bool QueueLane){
     this->id = id;
     this->road = road;
     this->QueueLane = QueueLane;
-    this->cars = cars;
 }
 
 // Return lane identifier.
@@ -18,22 +17,26 @@ bool Lane::isEmpty(){
     return this->cars.empty();
 }
 
-// Pop one car from the front of the queue.
+// Remove and return the first car in the vector.
 Car Lane::removeCar(){
-    if (isEmpty()) 
+    if (isEmpty())
         throw std::runtime_error("Cannot remove car from empty lane");
     Car car = cars.front();
-    cars.pop();
+    cars.erase(cars.begin());
     return car;
-    
+
 }
 
-// Push one car to the back of the queue.
+// Append a car to the back of the vector.
 void Lane::addCar(Car car){
-    this->cars.push(car);
+    this->cars.push_back(car);
 }
 
 // Check lane type.
 bool Lane::isQueueLane(){
     return this->QueueLane;
+}
+
+const std::vector<Car>& Lane::getCars() const {
+    return cars;
 }

@@ -2,9 +2,14 @@
 #include <string>
 #include<iostream>
 
+
+
 // Initialize all car properties.
-Car::Car(int speed, std::string colour){
-    this->id = ++nextid;
+
+int Car:: nextId = 0;
+
+Car::Car(float speed, std::string colour){
+    this->id = ++nextId;
     this->speed = speed;
     this->colour = colour;
 }
@@ -15,7 +20,7 @@ int Car::getId(){
 }
 
 // Return the current speed value.
-int Car::getSpeed(){
+float Car::getSpeed(){
     return this->speed;
 }
 
