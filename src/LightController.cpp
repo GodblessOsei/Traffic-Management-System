@@ -50,3 +50,7 @@ void LightController::updateLights(int deltaTime) {
         timer = 0;
     }
 }
+
+LightState LightController::getState(Direction direction) {
+    return trafficLights[direction]->getState();
+}

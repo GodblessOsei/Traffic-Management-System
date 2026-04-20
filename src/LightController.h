@@ -28,4 +28,5 @@ class LightController
         LightController(std::map<Direction, TrafficLight*> trafficLights);
         void updateLights(int deltaTime);
         bool isGreen(Direction direction);
+        LightState getState(Direction direction);
 };
