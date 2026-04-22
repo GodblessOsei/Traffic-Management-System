@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Intersection.h"
+#include "../backend/Intersection.h"
 
 namespace sf
 {

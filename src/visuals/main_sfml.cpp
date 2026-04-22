@@ -1,13 +1,13 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 
-#include "../Types.h"
-#include "../Car.h"
-#include "../Lane.h"
-#include "../Road.h"
-#include "../TrafficLight.h"
-#include "../LightController.h"
-#include "../Intersection.h"
+#include "../backend/Types.h"
+#include "../backend/Car.h"
+#include "../backend/Lane.h"
+#include "../backend/Road.h"
+#include "../backend/TrafficLight.h"
+#include "../backend/LightController.h"
+#include "../backend/Intersection.h"
 #include "Config.h"
 #include "Renderer.h"
 
