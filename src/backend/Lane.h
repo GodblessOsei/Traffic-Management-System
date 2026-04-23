@@ -29,7 +29,7 @@ public:
     // Tell whether this is a queue lane.
     bool isQueueLane();
 
-    // Get the vector of cars
     const std::vector<Car>& getCars() const;
+    std::vector<Car>& getCars();
 };
 

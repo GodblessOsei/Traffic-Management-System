@@ -25,7 +25,7 @@ bool LightController::isGreen(Direction direction) {
 }
 
 // Advance phase timer and switch states when thresholds are reached.
-void LightController::updateLights(int deltaTime) {
+void LightController::updateLights(float deltaTime) {
     timer += deltaTime;
 
     if (currentPhase == Phase::NS_GREEN && timer >= GREEN_DURATION) {

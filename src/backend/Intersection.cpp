@@ -1,61 +1,57 @@
 #include "Intersection.h"
 
-// Initialize intersection identity, roads, and controller.
-Intersection:: Intersection(int id, map<Direction, Road*> roads, LightController* lightController){
+Intersection::Intersection(int id, map<Direction, Road*> roads, LightController* lightController) {
     this->id = id;
     this->roads = roads;
     this->lightController = lightController;
 }
 
-// Return intersection identifier.
-int Intersection::getId(){
-    return this->id;
+int Intersection::getId() { return id; }
+
+Road* Intersection::getRoad(Direction direction) { return roads[direction]; }
+
+LightController* Intersection::getLightController() { return lightController; }
+
+Direction Intersection::opposite(Direction d) {
+    switch (d) {
+        case Direction::NORTH: return Direction::SOUTH;
+        case Direction::SOUTH: return Direction::NORTH;
+        case Direction::EAST:  return Direction::WEST;
+        case Direction::WEST:  return Direction::EAST;
+    }
+    return d;
 }
 
-// Update lights, then move cars from green-light roads.
-void Intersection::update(int deltaTime){
+// Advance lights, then start one crossing per green direction that has a
+// waiting car and an empty crossing slot. Crossings are completed externally
+// (by the renderer) so that animation can finish before the car is committed.
+void Intersection::update(float deltaTime) {
     lightController->updateLights(deltaTime);
-    for (const auto& pair : roads) { // Check each road's traffic light
-        Direction dir = pair.first;
-        Road* road = pair.second;
-        if (lightController->isGreen(dir)) {
-            Direction oppositeDir;
-            switch (dir) { // Determine opposite direction
-                case Direction::NORTH: oppositeDir = Direction::SOUTH; break;
-                case Direction::SOUTH: oppositeDir = Direction::NORTH; break;
-                case Direction::EAST: oppositeDir = Direction::WEST; break;
-                case Direction::WEST: oppositeDir = Direction::EAST; break;
+    for (auto& [dir, road] : roads) {
+        if (lightController->isGreen(dir) && !crossingCars[dir].has_value()) {
+            Lane* queue = road->getQueueLane();
+            if (!queue->isEmpty()) {
+                crossingCars[dir] = queue->removeCar();
             }
-            moveCars(dir, oppositeDir);
         }
     }
 }
 
-// Add a car to a specific direction's queue lane.
-void Intersection::addCar(Direction direction, Car car){
+void Intersection::addCar(Direction direction, Car car) {
     roads[direction]->getQueueLane()->addCar(car);
 }
 
-// Return road by direction.
-Road* Intersection::getRoad(Direction direction){
-    return roads[direction];
+bool Intersection::hasCrossingCar(Direction from) const {
+    auto it = crossingCars.find(from);
+    return it != crossingCars.end() && it->second.has_value();
 }
 
-// Return the light controller assigned to this intersection.
-LightController* Intersection::getLightController(){
-    return this->lightController;
+Car& Intersection::getCrossingCar(Direction from) {
+    return *crossingCars[from];
 }
 
-// Move one car from a source queue lane to a destination arrival lane.
-void Intersection::moveCars(Direction from, Direction to){
-    Road* fromRoad = roads[from];
-    Road* toRoad = roads[to];
-    Lane* fromLane = fromRoad->getQueueLane();
-    Lane* toLane = toRoad->getArrivalLane();
-
-    if (!fromLane->isEmpty()) {
-        Car car = fromLane->removeCar();
-        toLane->addCar(car);
-    }
+void Intersection::completeCrossing(Direction from) {
+    if (!crossingCars[from].has_value()) return;
+    roads[opposite(from)]->getArrivalLane()->addCar(*crossingCars[from]);
+    crossingCars[from].reset();
 }
-

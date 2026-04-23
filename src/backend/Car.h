@@ -7,25 +7,24 @@ class Car
 {
 
 private:
-    // Unique car identifier.
     static int nextId;
     int id;
-    // Car speed value (unit defined by simulation).
     float speed;
-    // Visual color label for the car.
     std::string colour;
-
-   
-
+    float px = 0.f, py = 0.f;
+    bool posSet = false;
 
 public:
-    bool canMove = false; //public because external factors determine if a car can move
+    bool canMove = false;
 
-    // Create a new car.
     Car(float speed, std::string colour);
 
-    // Accessors.
-    float getSpeed();
-    std::string  getColor();
-    int getId();
+    float getSpeed() const;
+    std::string getColor() const;
+    int getId() const;
+
+    void setPos(float x, float y);
+    float getPx() const;
+    float getPy() const;
+    bool isPosSet() const;
 };

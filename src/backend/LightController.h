@@ -19,14 +19,12 @@ class LightController
         // One traffic light per direction.
         std::map<Direction, TrafficLight*> trafficLights;
         Phase currentPhase;
-        // Elapsed time inside the current phase.
-        int timer;
-        // Apply states to N/S and E/W groups.
+        float timer;
         void setLights(LightState ns, LightState ew);
 
     public:
         LightController(std::map<Direction, TrafficLight*> trafficLights);
-        void updateLights(int deltaTime);
+        void updateLights(float deltaTime);
         bool isGreen(Direction direction);
         LightState getState(Direction direction);
 };

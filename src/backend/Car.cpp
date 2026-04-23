@@ -14,18 +14,12 @@ Car::Car(float speed, std::string colour){
     this->colour = colour;
 }
 
-// Return the car identifier.
-int Car::getId(){
-    return this->id;
-}
+int Car::getId() const { return id; }
+float Car::getSpeed() const { return speed; }
+std::string Car::getColor() const { return colour; }
 
-// Return the current speed value.
-float Car::getSpeed(){
-    return this->speed;
-}
-
-// Return the car color label.
-std::string Car::getColor(){
-    return this->colour;
-}
+void Car::setPos(float x, float y) { px = x; py = y; posSet = true; }
+float Car::getPx() const { return px; }
+float Car::getPy() const { return py; }
+bool Car::isPosSet() const { return posSet; }
 

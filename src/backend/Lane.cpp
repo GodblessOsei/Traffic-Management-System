@@ -37,6 +37,5 @@ bool Lane::isQueueLane(){
     return this->QueueLane;
 }
 
-const std::vector<Car>& Lane::getCars() const {
-    return cars;
-}
+const std::vector<Car>& Lane::getCars() const { return cars; }
+std::vector<Car>& Lane::getCars() { return cars; }

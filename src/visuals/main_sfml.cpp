@@ -79,8 +79,16 @@ int main()
     // ── Create renderer ──────────────────────────────────────────────────────
     Renderer renderer(window, intersection);
 
-    // ── Clock for delta-time ─────────────────────────────────────────────────
+    // ── Clock and spawner state ──────────────────────────────────────────────
     sf::Clock clock;
+    float spawnTimer = 0.f;
+    int   colorIdx = 4, dirIdx = 0;  // start at index 4 so initial cars use 0–3
+    static const char* colors[] = {
+        "red", "blue", "green", "white", "orange", "purple", "cyan", "yellow"
+    };
+    static const Direction spawnDirs[] = {
+        Direction::NORTH, Direction::EAST, Direction::SOUTH, Direction::WEST
+    };
 
     // ── Main loop ────────────────────────────────────────────────────────────
     while (window.isOpen())
@@ -94,16 +102,29 @@ int main()
                 window.close();
         }
 
+        // -- Delta time ------------------------------------------------------
+        float dt = clock.restart().asSeconds();
+
+        // -- Periodic car spawning -------------------------------------------
+        spawnTimer += dt;
+        if (spawnTimer >= Config::SPAWN_INTERVAL) {
+            spawnTimer = 0.f;
+            Direction d = spawnDirs[dirIdx % 4];
+            dirIdx++;
+            intersection.addCar(d, Car(2.0f, colors[colorIdx % 8]));
+            colorIdx++;
+        }
+
         // -- Simulation update -----------------------------------------------
-        // Restart returns elapsed time and resets the clock atomically.
-        // Convert to integer milliseconds — Intersection::update expects int.
-        int dt = static_cast<int>(clock.restart().asSeconds()); //clock.restart().asSeconds();
         intersection.update(dt);
 
+        // -- Animate car positions -------------------------------------------
+        renderer.updateCarPositions(dt);
+
         // -- Render ----------------------------------------------------------
-        window.clear(sf::Color(30, 30, 30));   // dark-grey background
-        renderer.draw();                        // roads, dividers, lights, cars
-        window.display();                       // flip front/back buffers
+        window.clear(sf::Color(30, 30, 30));
+        renderer.draw();
+        window.display();
     }
 
     return 0;

@@ -30,10 +30,19 @@ namespace Config {
     constexpr float WEST_SPAWN_X  = 50;
     constexpr float WEST_SPAWN_Y  = 450;
 
-    // Car size
+    // Car size (vertical car: W wide, H tall; horizontal car uses H as length in x)
     constexpr float CAR_W = 30;
     constexpr float CAR_H = 50;
 
     // Car speed (pixels per second)
     constexpr float CAR_SPEED = 100.0f;
+
+    // Arrival lane center x/y (cars exiting intersection on the far side)
+    constexpr float NORTH_ARRIVAL_X = 450.f;  // left (northbound) lane of north road
+    constexpr float SOUTH_ARRIVAL_X = 350.f;  // left (southbound) lane of south road
+    constexpr float EAST_ARRIVAL_Y  = 450.f;  // left (eastbound) lane of east road
+    constexpr float WEST_ARRIVAL_Y  = 350.f;  // left (westbound) lane of west road
+
+    // Spawn interval for periodic car generation (seconds)
+    constexpr float SPAWN_INTERVAL = 3.5f;
 }

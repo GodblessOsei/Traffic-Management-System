@@ -23,6 +23,10 @@ traffic_visual: $(BACKEND_OBJS) $(VISUAL_OBJS)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+test: $(BACKEND_SRCS) src/tests/test_backend.cpp
+	$(CXX) $(CXXFLAGS) -o test_backend $(BACKEND_SRCS) src/tests/test_backend.cpp
+	./test_backend
+
 clean:
 	rm -f $(BACKEND_OBJS) src/backend/main.o $(VISUAL_OBJS) \
-	      traffic_sim traffic_visual
+	      traffic_sim traffic_visual test_backend

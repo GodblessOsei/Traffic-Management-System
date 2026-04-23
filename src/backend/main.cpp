@@ -67,7 +67,13 @@ int main()
 
     // Run a loop for 30 ticks with deltaTime = 1
     for (int i = 0; i < 30; i++) {
-        intersection.update(1.0f); // 1 second per tick
+        intersection.update(1.0f);
+        // Headless mode: complete crossings instantly (no animation renderer)
+        for (auto dir : {Direction::NORTH, Direction::SOUTH,
+                         Direction::EAST,  Direction::WEST}) {
+            if (intersection.hasCrossingCar(dir))
+                intersection.completeCrossing(dir);
+        }
         cout << "Tick " << i+1
          << " | N:" << toString(northLight.getState())
          << " | S:" << toString(southLight.getState())
