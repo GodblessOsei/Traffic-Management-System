@@ -1,35 +1,37 @@
 #pragma once
-#include <queue>
-#include <string>
-#include "Car.h"
+#include <vector>
+#include <memory>
+#include <stdexcept>
+#include "Vehicle.h"
 
-class Road; // forward declaration of Road to avoid circular dependency
-
-// Stores cars in FIFO order for a road segment.
+// Ordered list of vehicles for one segment of a road.
+// shared_ptr<Vehicle> is used so Lane can hold any Vehicle subtype (Car, Bus, Bike)
+// Intersection keeps a second reference for crossing vehicles during their animation.
 class Lane
 {
-
 private:
-    int id;
-    // True when this lane is an incoming queue lane.
-    bool QueueLane;
-    // Cars waiting or arriving on this lane.
-    std::vector<Car> cars;
-    Road *road;    
+    int  id;
+    bool QueueLane; // true = vehicles wait here for a green light; false = arrival/exit lane.
+
+    // Vehicles are stored front-to-back: index 0 is closest to the stop line.
+    std::vector<std::shared_ptr<Vehicle>> vehicles;
+
 public:
-    // Build a lane and link it to a road.
-    Lane(int id, Road *road, bool QueueLane);
-    // Add a car to the back of the lane queue.
-    void addCar(Car car);
-    // Remove and return the front car.
-    Car removeCar();
-    // Check whether there are cars in the lane.
+    Lane(int id, bool QueueLane);
+
+    // Appends to the back .
+    void addVehicle(std::shared_ptr<Vehicle> vehicle);
+
+    // Removes and returns the front vehicle 
+    // Throws std::runtime_error if the lane is empty.
+    std::shared_ptr<Vehicle> removeVehicle();
+
     bool isEmpty();
-    int getId();
-    // Tell whether this is a queue lane.
+    int  getId();
     bool isQueueLane();
 
-    const std::vector<Car>& getCars() const;
-    std::vector<Car>& getCars();
+    // Two overloads so callers can safely change vehicle positions when needed
+    
+    const std::vector<std::shared_ptr<Vehicle>>& getVehicles() const;
+          std::vector<std::shared_ptr<Vehicle>>& getVehicles();
 };
-

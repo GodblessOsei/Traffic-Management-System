@@ -1,30 +1,19 @@
-// src/Car.h
 #pragma once
-#include <iostream>
+#include "Vehicle.h"
 
-// Represents one vehicle in the simulation.
-class Car
+// A small car. Dimensions are 30 px wide × 50 px tall (portrait orientation).
+class Car : public Vehicle
 {
-
 private:
-    static int nextId;
-    int id;
-    float speed;
-    std::string colour;
-    float px = 0.f, py = 0.f;
-    bool posSet = false;
+    float speed;        // Pixels per second passed in at construction.
+    std::string colour; // Colour name resolved into RGB at draw time by Renderer::parseCarColor.
 
 public:
-    bool canMove = false;
-
     Car(float speed, std::string colour);
 
-    float getSpeed() const;
-    std::string getColor() const;
-    int getId() const;
-
-    void setPos(float x, float y);
-    float getPx() const;
-    float getPy() const;
-    bool isPosSet() const;
+    float       getSpeed()  const override;
+    std::string getColor()  const override;
+    std::string getType()   const override; // Returns "Car".
+    float       getWidth()  const override; // 30 px — narrow side.
+    float       getHeight() const override; // 50 px — long side.
 };

@@ -1,41 +1,23 @@
 #include "Lane.h"
 
-// Initialize lane metadata.
-Lane:: Lane(int id, Road *road, bool QueueLane){
-    this->id = id;
-    this->road = road;
-    this->QueueLane = QueueLane;
+Lane::Lane(int id, bool QueueLane)
+    : id(id), QueueLane(QueueLane) {}
+
+int  Lane::getId()        { return id; }
+bool Lane::isEmpty()      { return vehicles.empty(); }
+bool Lane::isQueueLane()  { return QueueLane; }
+
+void Lane::addVehicle(std::shared_ptr<Vehicle> vehicle) {
+    vehicles.push_back(vehicle);
 }
 
-// Return lane identifier.
-int Lane::getId(){
-    return this->id;
-}
-
-// True when lane has no cars.
-bool Lane::isEmpty(){
-    return this->cars.empty();
-}
-
-// Remove and return the first car in the vector.
-Car Lane::removeCar(){
+std::shared_ptr<Vehicle> Lane::removeVehicle() {
     if (isEmpty())
-        throw std::runtime_error("Cannot remove car from empty lane");
-    Car car = cars.front();
-    cars.erase(cars.begin());
-    return car;
-
+        throw std::runtime_error("Cannot remove vehicle from empty lane");
+    auto v = vehicles.front();
+    vehicles.erase(vehicles.begin());
+    return v;
 }
 
-// Append a car to the back of the vector.
-void Lane::addCar(Car car){
-    this->cars.push_back(car);
-}
-
-// Check lane type.
-bool Lane::isQueueLane(){
-    return this->QueueLane;
-}
-
-const std::vector<Car>& Lane::getCars() const { return cars; }
-std::vector<Car>& Lane::getCars() { return cars; }
+const std::vector<std::shared_ptr<Vehicle>>& Lane::getVehicles() const { return vehicles; }
+      std::vector<std::shared_ptr<Vehicle>>& Lane::getVehicles()       { return vehicles; }

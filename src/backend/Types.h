@@ -1,35 +1,15 @@
 // src/Types.h
 #pragma once
+#include <string>
 
-#include<string>
+// Cardinal directions — used as map keys so road/light lookups are direction-indexed.
+enum class Direction { NORTH, SOUTH, EAST, WEST };
 
-// Cardinal directions used for roads and light lookup.
-enum class Direction
-{
-    NORTH,
-    SOUTH,
-    EAST,
-    WEST
-};
+// Three-state signal model.
+enum class LightState { RED, GREEN, YELLOW };
 
-// Possible states of a traffic signal.
-enum class LightState
-{
-    RED,
-    GREEN,
-    YELLOW
-};
-
-// Signal timing constants in simulation seconds.
-const int GREEN_DURATION = 10;
+// Phase durations in simulation time units (seconds when dt is in seconds).
+// A direction stays RED for the full opposing green + yellow cycle;
+const int GREEN_DURATION  = 10;
 const int YELLOW_DURATION = 3;
-const int RED_DURATION = 10;
 
-inline std::string toString(LightState s) {
-    switch(s) {
-        case LightState::RED:    return "RED";
-        case LightState::YELLOW: return "YELLOW";
-        case LightState::GREEN:  return "GREEN";
-    }
-    return "";
-}

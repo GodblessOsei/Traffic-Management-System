@@ -4,7 +4,9 @@ SFML_LIB     = -L/opt/homebrew/Cellar/sfml/3.0.2/lib
 CXXFLAGS     = -std=c++17 -Wall -I./src/backend -I./src/visuals $(SFML_INCLUDE)
 SFMLFLAGS    = $(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system
 
-BACKEND_SRCS = src/backend/Car.cpp src/backend/Lane.cpp src/backend/Road.cpp \
+BACKEND_SRCS = src/backend/Vehicle.cpp \
+               src/backend/Car.cpp src/backend/Bus.cpp src/backend/Bike.cpp \
+               src/backend/Lane.cpp src/backend/Road.cpp \
                src/backend/TrafficLight.cpp src/backend/LightController.cpp \
                src/backend/Intersection.cpp
 BACKEND_OBJS = $(BACKEND_SRCS:.cpp=.o)
@@ -23,9 +25,8 @@ traffic_visual: $(BACKEND_OBJS) $(VISUAL_OBJS)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-test: $(BACKEND_SRCS) src/tests/test_backend.cpp
-	$(CXX) $(CXXFLAGS) -o test_backend $(BACKEND_SRCS) src/tests/test_backend.cpp
-	./test_backend
+test: traffic_sim
+	./traffic_sim
 
 clean:
 	rm -f $(BACKEND_OBJS) src/backend/main.o $(VISUAL_OBJS) \

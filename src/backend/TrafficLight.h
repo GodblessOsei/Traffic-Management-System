@@ -2,22 +2,25 @@
 #include "Types.h"
 #include "Road.h"
 
-// Controls light state for one road direction.
+// Represents one traffic light governing a single road arm.
+// LightController controlls the lightState via a friend declaration.
 class TrafficLight
 {
-    friend class LightController; // to control setState()
 
-    private:
-        int id;
-        LightState lightState;
-        // Road governed by this light.
-        Road* road;
-        void setState(LightState newState); // private — only accessible by TrafficLight and LightController
+    friend class LightController; // state machine driver
 
-    public:
-        // Create a traffic light with initial state.
-        TrafficLight(int id, LightState lightState, Road* road);
-        int getId();
-        LightState getState();
-        Road* getRoad();
+private:
+    int        id;
+    LightState lightState;
+    Road*      road; // The road arm this light controls.
+
+    // Only LightController controls the transition logic.
+    void setState(LightState newState);
+
+public:
+    TrafficLight(int id, LightState lightState, Road* road);
+
+    int        getId();
+    LightState getState();
+    Road*      getRoad();
 };
